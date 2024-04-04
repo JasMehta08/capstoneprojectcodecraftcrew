@@ -44,16 +44,15 @@ class details{
         faculty = fac;
     }
     void print(){
-        cout << "insert details"<<endl<< "id. number ";
-        cout << st_id;
-        cout <<endl<< "name ";
+        cout <<"Student ID: "<<st_id;
+        cout <<endl<< "Student Name: ";
         cout << st_name;
-        cout << endl << "club ";
+        cout << endl << "Member of Club: ";
         cout << club; 
-        cout<< endl<< "type of club ";
+        cout<< endl<< "Club type: ";
         cout << club_type;
-        cout<< endl << "faculty(true / false) ";
-        cout << faculty; 
+        cout<< endl << "Faculty(True / False): ";
+        cout << faculty<<"\n"<<endl; 
     }
 };
 
@@ -66,7 +65,7 @@ class general_list{
         void add_new(int id, details member){
             gen_list[id]=member;
         }
-        void add_new(string name, details member){
+        void add_2new(string name, details member){
         gen2_list[name] = member;
         }
 
@@ -138,9 +137,24 @@ class clubtype{
    
 };
 int main(){
+    ofstream outputFile("output.txt");          // Opening a file for output
+    
+    if (!outputFile.is_open()) {                            // Checking if the file was opened successfully
+        cerr << "Error opening output file!" << endl;
+        return 1;
+    }
+
+    streambuf *coutbuf = cout.rdbuf(); 
+    cout.rdbuf(outputFile.rdbuf());             // Redirecting output to file instead of console
+
+    // Our main code
     general_list main ;
     main.get_from_file("gen_list.txt");
-    main.find_mem_by_id(202301039);
+    main.find_mem_by_id(202301414);
     main.find_mem_by_name("Parshv_Joshi"); 
+    // end of the main code
+    
+    cout.rdbuf(coutbuf);
+    outputFile.close();             // closing the output file
     return 0;
 }

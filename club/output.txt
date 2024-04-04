@@ -1,0 +1,12 @@
+Student ID: 202301414
+Student Name: Visha_Sitapara
+Member of Club: Khelaiya_club
+Club type: Arts
+Faculty(True / False): False
+
+Student ID: 202301039
+Student Name: Parshv_Joshi
+Member of Club: Khelaiya_club
+Club type: Arts
+Faculty(True / False): False
+
