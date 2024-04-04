@@ -91,6 +91,42 @@ class general_list{
                     member.create(stoi(id) , name , club , clubtype , faculty);
                     add_new(stoi(id), member);
                     add_2new(name,member);
+                if(club == "Khelaiya club"){
+                 Khelaiya_club.add_member_to_club(member);
+            }
+                if(club == "Press club"){
+                 Press_club.add_member_to_club(member);
+            }
+                if(club == "Music club"){
+                 Music_club.add_member_to_club(member);
+            }
+                if(club == "Debate club"){
+                 Debate_club.add_member_to_club(member);
+            }
+                if(club == "Dance club"){
+                 Dance_club.add_member_to_club(member);
+            }
+                if(club == "Cubing club"){
+                 Cubing_club.add_member_to_club(member);
+            }
+                if(club == "Quiz club"){
+                 Quiz_club.add_member_to_club(member);
+            }
+                if(club == "Drama club"){
+                 Drama_club.add_member_to_club(member);
+            }
+                if(club == "Muse club"){
+                 Muse_club.add_member_to_club(member);
+            }
+                if(club == "Radio club"){
+                 Radio_club.add_member_to_club(member);
+            }
+                if(club == "Programming club"){
+                 Programming_club.add_member_to_club(member);
+            }
+                if(club == "Developers club"){
+                 Developers_club.add_member_to_club(member);
+            }
                 
             }
             file.close();
@@ -114,8 +150,12 @@ class club {
     int n ;
     vector < details > list_of_members ;
     public: 
-    club(int m){
-        n = m;
+    club(){
+        n = 0;
+    }
+    void add_member_to_club(details member){
+        list_of_members.push_back(member);
+        n++;
     }
     
 
@@ -149,6 +189,7 @@ int main(){
 
     // Our main code
     general_list main ;
+    club Khelaiya_club,Press_club,Debate_club,Music_club,Dance_club,Cubing_club,Quiz_club,Drama_club,Muse_club,Radio_club,Programming_club,Developers_club;
     main.get_from_file("gen_list.txt");
     main.find_mem_by_id(202301414);
     main.find_mem_by_name("Parshv_Joshi"); 
