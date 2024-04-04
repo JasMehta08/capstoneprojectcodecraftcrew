@@ -61,7 +61,8 @@ class details{
 class general_list{
     public: 
         unordered_map<int , details> gen_list;
-        
+        unordered_map<string , details> gen2_list;
+
         void add_new(int id, details member){
             gen_list[id]=member;
         }
@@ -126,10 +127,15 @@ class clubtype{
         list_of_clubs.push_back(add);
         m++;
     }
+    void find_mem_by_name(string name){
+            details member = gen2_list.at(name);
+            member.print();
+        }
 };
 int main(){
     general_list main ;
     main.get_from_file("gen_list.txt");
     main.find_mem_by_id(2);
+    main.find_mem_by_name("max); 
     return 0;
 }
