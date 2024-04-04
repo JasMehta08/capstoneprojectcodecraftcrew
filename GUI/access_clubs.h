@@ -16,7 +16,7 @@ public:
     ~access_clubs();
 
 private slots:
-    void on_comboBox_activated(int index);
+    
 
 private:
     Ui::access_clubs *ui;
