@@ -66,6 +66,9 @@ class general_list{
         void add_new(int id, details member){
             gen_list[id]=member;
         }
+        void add_new(string name, details member){
+        gen2_list[name] = member;
+        }
 
         void get_from_file(const string& filename) {
         ifstream file(filename);
@@ -88,6 +91,7 @@ class general_list{
                     details member;
                     member.create(stoi(id) , name , club , clubtype , faculty);
                     add_new(stoi(id), member);
+                    add_2new(name,member);
                 
             }
             file.close();
@@ -136,7 +140,7 @@ class clubtype{
 int main(){
     general_list main ;
     main.get_from_file("gen_list.txt");
-    main.find_mem_by_id(2);
-    main.find_mem_by_name("max"); 
+    main.find_mem_by_id(202301039);
+    main.find_mem_by_name("Parshv_Joshi"); 
     return 0;
 }
