@@ -137,6 +137,6 @@ int main(){
     general_list main ;
     main.get_from_file("gen_list.txt");
     main.find_mem_by_id(2);
-    main.find_mem_by_name("gen_list.txt"); 
+    main.find_mem_by_name("max"); 
     return 0;
 }
