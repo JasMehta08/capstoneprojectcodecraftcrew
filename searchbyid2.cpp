@@ -62,5 +62,6 @@ int main(){
         Press_club.print_info(input_id);
         cout<<"Member of club: Press Club"<<endl;
     }
+    
     return 0;
 }
