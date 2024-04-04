@@ -5,8 +5,11 @@ IT205
 members:
 
 Jas Mehta (leader)
+<br>
 Yug Tejani 
+<br>
 Visha Sitapara
+<br>
 Ishti Patel
 
 
