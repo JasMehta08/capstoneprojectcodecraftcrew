@@ -100,6 +100,10 @@ class general_list{
             details member = gen_list.at(id);
             member.print();
         }
+        void find_mem_by_name(string name){
+            details member = gen2_list.at(name);
+            member.print();
+        }
 };
 // details of a particular club will be stored in this class
 class club {
@@ -127,15 +131,12 @@ class clubtype{
         list_of_clubs.push_back(add);
         m++;
     }
-    void find_mem_by_name(string name){
-            details member = gen2_list.at(name);
-            member.print();
-        }
+   
 };
 int main(){
     general_list main ;
     main.get_from_file("gen_list.txt");
     main.find_mem_by_id(2);
-    main.find_mem_by_name("max); 
+    main.find_mem_by_name("max"); 
     return 0;
 }
