@@ -10,3 +10,10 @@ Member of Club: Khelaiya_club
 Club type: Arts
 Faculty(True / False): False
 
+the list of the members of the club : Khelaiya club
+
+ Student ID        Faculty        Student Name 
+
+ 202301039         False          Parshv_Joshi 
+ 202301072         False          Siddharth_Rambhia 
+ 202301414         False          Visha_Sitapara 
