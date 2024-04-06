@@ -24,7 +24,7 @@ public:
     // Function to deposit money into a club's budget
     void depositMoney(int money_to_add, const string& club_name) {
         club_budgets[club_name] += money_to_add;
-        cout << "Deposited $" << money_to_add << " into the budget of club " << club_name << endl;
+        cout << "Deposited " << money_to_add << " into the budget of club " << club_name << endl;
     }
 
     // Function to withdraw money from a club's budget
@@ -32,7 +32,7 @@ public:
         if (club_budgets.find(club_name) != club_budgets.end()) {
             if (club_budgets[club_name] >= money_to_withdraw) {
                 club_budgets[club_name] -= money_to_withdraw;
-                cout << "Withdrawn $" << money_to_withdraw << " from the budget of club " << club_name << endl;
+                cout << "Withdrawn " << money_to_withdraw << " from the budget of club " << club_name << endl;
                 return true;
             } else {
                 cout << "Not enough balance in the budget of club " << club_name << endl;
