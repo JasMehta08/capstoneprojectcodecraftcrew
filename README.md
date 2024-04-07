@@ -4,13 +4,13 @@ IT205
 
 members:
 
-Jas Mehta (leader)
+Jas Mehta (leader) 202301432
 <br>
-Yug Tejani 
+Yug Tejani 202301487
 <br>
-Visha Sitapara
+Visha Sitapara 202301414
 <br>
-Ishti Patel
+Ishti Patel 202301212
 
 
 Problem given -> DA-IICT Club Manager
