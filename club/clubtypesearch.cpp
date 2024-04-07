@@ -364,7 +364,14 @@ cout<<"select output type"<<endl
         if(output_type==2){
             output_file = true;
             cout << "give name of the file to output into :";
-                    cin>>filename;
+            cin>>filename;
+        }
+        
+        ofstream outputFile(filename+".txt"); // Opening a file for output
+
+        if (!outputFile.is_open())
+        { // Checking if the file was opened successfully
+            cerr << "Error opening output file!" << endl;
         }
 while(flag){
     cout<<"what do you want to perform:"<<endl
@@ -393,23 +400,13 @@ while(flag){
                 cout<<endl;
                 if(!output_file) mem_list.find_mem_by_id(id);
                 else{
-                    ofstream outputFile(filename+".txt"); // Opening a file for output
-
-                    if (!outputFile.is_open())
-                    { // Checking if the file was opened successfully
-                        cerr << "Error opening output file!" << endl;
-                        break;
-                    }
-
                     streambuf *coutbuf = cout.rdbuf();
                     cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
 
                     // Our main code
                     mem_list.find_mem_by_id(id);
                     // end of the main code
-
                     cout.rdbuf(coutbuf);
-                    outputFile.close(); // closing the output file
                 }
                 break;
             case 2:
@@ -418,13 +415,6 @@ while(flag){
                 cout<<endl;
                 if(!output_file) mem_list.find_mem_by_name(given_name);
                 else{
-                    ofstream outputFile(filename+".txt"); // Opening a file for output
-
-                    if (!outputFile.is_open())
-                    { // Checking if the file was opened successfully
-                        cerr << "Error opening output file!" << endl;
-                        break;
-                    }
 
                     streambuf *coutbuf = cout.rdbuf();
                     cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
@@ -432,9 +422,7 @@ while(flag){
                     // Our main code
                     mem_list.find_mem_by_name(given_name);
                     // end of the main code
-
                     cout.rdbuf(coutbuf);
-                    outputFile.close(); // closing the output file
                 }
                 break;
             case 3:
@@ -443,23 +431,13 @@ while(flag){
                 cout<<endl;
                 if(!output_file) display_club(club_name);
                 else{
-                    ofstream outputFile(filename+".txt"); // Opening a file for output
-
-                    if (!outputFile.is_open())
-                    { // Checking if the file was opened successfully
-                        cerr << "Error opening output file!" << endl;
-                        break;
-                    }
-
                     streambuf *coutbuf = cout.rdbuf();
                     cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
 
                     // Our main code
                     display_club(club_name);
                     // end of the main code
-
                     cout.rdbuf(coutbuf);
-                    outputFile.close(); // closing the output file
                 }
                 break;
             case 4:
@@ -468,23 +446,13 @@ while(flag){
                 cout<<endl;
                 if(!output_file) display_using_clubtype(given_type);
                 else{
-                    ofstream outputFile(filename+".txt"); // Opening a file for output
-
-                    if (!outputFile.is_open())
-                    { // Checking if the file was opened successfully
-                        cerr << "Error opening output file!" << endl;
-                        break;
-                    }
-
                     streambuf *coutbuf = cout.rdbuf();
                     cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
 
                     // Our main code
                     display_using_clubtype(given_type);
                     // end of the main code
-
                     cout.rdbuf(coutbuf);
-                    outputFile.close(); // closing the output file
                 }
                 break;
             default:
@@ -493,6 +461,6 @@ while(flag){
         }
 }
 
-
+outputFile.close(); // closing the output file
     return 0;
 }
