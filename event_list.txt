@@ -1,3 +1,8 @@
-Musical night,music night is organised in oat,3000,10,5,2024
-Debate session,Debate on the provided topics will take place in cep,1000,12,4,2024
-Interview,Interview of all the faculty members,50,1,6,2024
+Musical night,Bring your instruments and voices together for an evening of musical improvisation and collaboration.,1000,10,5,2024,Music_club
+Debate session,Engage in lively discussions on contemporary issues and improve your public speaking skills.,500,12,4,2024,Debate_club
+Journalism Workshop,Learn the basics of reporting and news writing from seasoned professionals.,1000,1,6,2024,Press_club
+Dance-off Challenge,Showcase your best moves and compete for the title of Dance Champion.,2000,20,7,2024,Dance_club
+Speedcubing Competition,Test your puzzle-solving skills and compete against fellow cubers for the fastest time.,700,21,4,2024,Cubing_club
+Tech Talk Series,Dive deep into the latest trends and innovations in the world of software development through interactive sessions and guest speakers.,4000,25,8,2024,Developers_club
+Hackathon,Collaborate with fellow coders to develop innovative solutions to real-world problems within a limited time frame.,2500,23,7,2024,Programming_club
+Live Broadcast,Host your own radio show and share music and stories with the audience.,1700,5,5,2024,Radio_club
