@@ -36,5 +36,3 @@
 202301270 Ashka_Pathak Music_club Arts False
 202304030 Bilwa_Raval Music_club Arts False
 202304035 Mohit_Dhanwani Music_club Arts False
-202301000 Add_func_check Khelaiya_club Arts True
-202301000 Add_func_check Khelaiya_club Arts True

@@ -1,12 +1,12 @@
-Khelaiya_club
-Press_club
-Debate_club
-Music_club
-Dance_club
-Cubing_club
-Quiz_club
-Drama_club
-Muse_club
-Radio_club
-Programming_club
-Developers_club
+Khelaiya_club Arts
+Press_club Media
+Debate_club Literature
+Music_club Arts
+Dance_club Arts
+Cubing_club Recreational
+Quiz_club Literature
+Drama_club Arts
+Muse_club Arts
+Radio_club Media
+Programming_club Technical
+Developers_club Technical
