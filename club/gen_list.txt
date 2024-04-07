@@ -70,3 +70,5 @@
 202101101 Aadey_Shah Developers_club Technical False
 202101415 Maulik_Thakkar Developers_club Technical False
 200201055 Manik_Lal_Das Developers_club Technical True
+456 dsf cd "/Users/jasmehta/Desktop/capstone/capstoneprojectcodecraftcrew/club/" &&
+453 dfg cd "/Users/jasmehta/Desktop/capstone/capstoneprojectcodecraftcrew/club/" &&

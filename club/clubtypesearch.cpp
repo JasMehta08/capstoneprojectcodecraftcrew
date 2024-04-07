@@ -579,6 +579,12 @@ public:
     }
 };
 
+void dis_club(){
+    for (auto it = existing_clubs.begin(); it != existing_clubs.end(); ++it) {
+                        cout << " " << it->name_return() << endl;
+                }
+}
+
 class club_list{
     private: 
 
@@ -613,12 +619,19 @@ club_list list;
 
 int main()
 {
+    list.get_from_file("clublist.txt");
+    mem_list.get_from_file("gen_list.txt");
+    sort_clubs_into_sametype();
+    get_from_file();
+    calendar calendar_application;
+    calendar_application.get_from_file("event_list.txt");
     input:
     int runner=1 ; 
+    
     cout << "select which of the following you want to perform : "<<endl
          << "1. search"<<endl
          << "2. access clubs"<<endl
-         << "3. calender"<<endl;
+         << "3. club events"<<endl;
     cin >> runner ; 
     if(runner == 1 || runner == 2 || runner ==3 ){
 
@@ -628,9 +641,6 @@ int main()
         goto input;
     }
     if (runner == 1){
-        list.get_from_file("clublist.txt");
-        mem_list.get_from_file("gen_list.txt");
-        sort_clubs_into_sametype();
         bool flag = true,output_file=false;
         int picker,output_type;
         string filename;
@@ -745,10 +755,9 @@ int main()
 outputFile.close(); // closing the output file
     }
     else if (runner == 2 ){
-        get_from_file();
     string new_password,initial_password, club_name;
-    
-    int choice;
+    string name, club_name_,club_type_,faculty;
+    int choice,id;
     cout<<"Enter the club_name you want access";
     cin >> club_name;
     cout<<"Enter the password of the club";
@@ -757,10 +766,10 @@ outputFile.close(); // closing the output file
 
         
     do{    
-        cout<<"Enter 1 to get the current budget\n"
-        <<"Enter 2 to deposite money"
-        <<"Enter 3 to \n"
-        <<"Enter 4 to change password\n"
+        cout<<"Enter 1 to get the current budget"<<endl
+        <<"Enter 2 to deposite money"<<endl
+        <<"Enter 3 to add member to general list"<<endl
+        <<"Enter 4 to change password"<<endl
         <<"Enter 5 to "<<endl<<endl; 
         cin>>choice;
     switch (choice)
@@ -786,6 +795,25 @@ outputFile.close(); // closing the output file
         break;
 
         case 3:
+                cout << "insert details" << endl
+                    << "id. number :";
+                cin >> id;
+                cout << endl
+                    << "name :";
+                cin >> name;
+                cout << endl
+                    << "club :";
+                dis_club();
+                cin >> club_name_;
+                cout << endl
+                    << "type of club :"
+                    <<endl;
+                    cout<<" Arts\n Media\n Recreational\n Literature\n Technical\n";
+                cin >> club_type_;
+                cout << endl
+                    << "faculty(true / false)";
+                cin >> faculty;
+                mem_list.add_to_file("gen_list.txt", id, name, club_name_, club_type_, faculty);
         break;
 
         case 4:
@@ -809,8 +837,7 @@ outputFile.close(); // closing the output file
     }
     else if(runner == 3){
         int choice;
-    calendar calendar_application;
-    calendar_application.get_from_file("event_list.txt");
+    
     while(choice){
             cout<<"Which task do you want to perform?"<<endl;
             cout<<"1. Enter a new event\n"<<"2. Display most recent event\n"<<"3. Display all the events of the club\n";
