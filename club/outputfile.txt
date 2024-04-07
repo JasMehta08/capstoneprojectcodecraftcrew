@@ -1,0 +1,50 @@
+Student ID: 202301432
+Student Name: Jas_Mehta
+Member of Club: Press_club
+Club type: Media
+Faculty(True / False): False
+
+Student ID: 202301432
+Student Name: Jas_Mehta
+Member of Club: Press_club
+Club type: Media
+Faculty(True / False): False
+
+the list of the members of the club : Debate_club
+
+ Student ID        Faculty        Student Name 
+
+ 202301104         False          Harshil_Vora 
+ 202301043         False          Nisarg_Divecha 
+ 202301158         False          Manav_Patel 
+ 202301239         False          Kashyap_Ajudiya 
+ 202301440         False          Vraj_Parikh 
+ 200201004         True          Anil_Roy 
+
+
+displaying clubs of the type : Technical
+
+the list of the members of the club : Programming_club
+
+ Student ID        Faculty        Student Name 
+
+ 202101498         False          Keyur_Govrani 
+ 202101487         False          Vasu_Golakiya 
+ 202103022         False          Harit_Rajkotiya 
+ 202103024         False          Dhruv_Goti 
+ 202103045         False          Srushti_Kaneriya 
+ 200101666         True          Arpit_Rana 
+
+
+the list of the members of the club : Developers_club
+
+ Student ID        Faculty        Student Name 
+
+ 202101411         False          Shashank_Upadhyay 
+ 202101229         False          Dipak_Dabhi 
+ 202103033         False          Harsh_Kanani 
+ 202101101         False          Aadey_Shah 
+ 202101415         False          Maulik_Thakkar 
+ 200201055         True          Manik_Lal_Das 
+
+

@@ -72,3 +72,4 @@
 200201055 Manik_Lal_Das Developers_club Technical True
 456 dsf cd "/Users/jasmehta/Desktop/capstone/capstoneprojectcodecraftcrew/club/" &&
 453 dfg cd "/Users/jasmehta/Desktop/capstone/capstoneprojectcodecraftcrew/club/" &&
+202301532 Parth_Khan Music_club Arts true

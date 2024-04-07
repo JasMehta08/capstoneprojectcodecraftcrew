@@ -571,6 +571,7 @@ public:
             file.close();
             
             add_new(Id, member);
+            sort_into_club(member,Club_name);
         }
         else
         {
@@ -623,19 +624,14 @@ int main()
     mem_list.get_from_file("gen_list.txt");
     sort_clubs_into_sametype();
     get_from_file();
-    calendar calendar_application;
-    calendar_application.get_from_file("event_list.txt");
     input:
-    int runner=1 ; 
-    
+    int runner=1 ;
     cout << "select which of the following you want to perform : "<<endl
          << "1. search"<<endl
          << "2. access clubs"<<endl
          << "3. club events"<<endl;
     cin >> runner ; 
-    if(runner == 1 || runner == 2 || runner ==3 ){
-
-    }
+    if(runner == 1 || runner == 2 || runner ==3 );
     else{
         cout<< "wrong input, try again";
         goto input;
@@ -750,27 +746,27 @@ int main()
                 cout <<endl <<endl << "invalid selection, try again";
                 break;
         }
-}
+    }
 
-outputFile.close(); // closing the output file
+    outputFile.close(); // closing the output file
     }
     else if (runner == 2 ){
     string new_password,initial_password, club_name;
     string name, club_name_,club_type_,faculty;
     int choice,id;
-    cout<<"Enter the club_name you want access";
+    cout<<"Enter the club_name you want access : ";
     cin >> club_name;
-    cout<<"Enter the password of the club";
+    cout<<"Enter the password of the club : ";
     cin >> initial_password;
     if(access.verify(club_name, initial_password )){
 
         
     do{    
-        cout<<"Enter 1 to get the current budget"<<endl
+        cout<<endl<<"Enter 1 to get the current budget"<<endl
         <<"Enter 2 to deposite money"<<endl
         <<"Enter 3 to add member to general list"<<endl
         <<"Enter 4 to change password"<<endl
-        <<"Enter 5 to "<<endl<<endl; 
+        <<endl; 
         cin>>choice;
     switch (choice)
     {
@@ -780,7 +776,7 @@ outputFile.close(); // closing the output file
         break;
         
         case 1:
-        cout<<access.getCurrentBudget(club_name);
+        cout<< "current budget: "<<access.getCurrentBudget(club_name)<<endl<<endl;
 
         break;
 
@@ -788,10 +784,12 @@ outputFile.close(); // closing the output file
         int x;
         cout<<"enter money to be added: ";
         cin>>x;
+        cout << endl;
         access.depositMoney(x,club_name);
-        cout<<"successfully deposited ";
-        cout<<"Updated blance: ";
-        access.getCurrentBudget(club_name);
+        cout<<"successfully deposited "<<endl;
+        cout<<"Updated balance: ";
+        cout << access.getCurrentBudget(club_name);
+        cout << endl;
         break;
 
         case 3:
@@ -811,7 +809,7 @@ outputFile.close(); // closing the output file
                     cout<<" Arts\n Media\n Recreational\n Literature\n Technical\n";
                 cin >> club_type_;
                 cout << endl
-                    << "faculty(true / false)";
+                    << "faculty(true / false) :";
                 cin >> faculty;
                 mem_list.add_to_file("gen_list.txt", id, name, club_name_, club_type_, faculty);
         break;
@@ -824,7 +822,8 @@ outputFile.close(); // closing the output file
         access.change_password(initial_password,club_name,new_password);
         break;
 
-        case 5:
+        default:
+        cout << "invalid input";
         break;
     }
     }while(choice);
@@ -832,18 +831,17 @@ outputFile.close(); // closing the output file
     else{
         cout<<"incorrect club name or password entered\n";
     }
-
     return 0;
     }
     else if(runner == 3){
-        int choice;
-    
-    while(choice){
+        calendar calendar_application;
+        calendar_application.get_from_file("event_list.txt");
+        int use=1;
+        while(use){
             cout<<"Which task do you want to perform?"<<endl;
             cout<<"1. Enter a new event\n"<<"2. Display most recent event\n"<<"3. Display all the events of the club\n";
-            cin>>choice;
-    
-            switch (choice)
+            cin>>use;
+            switch (use)
             {
                 case 0: break;
                 case 1:
@@ -856,10 +854,10 @@ outputFile.close(); // closing the output file
                     calendar_application.display_all_events();
                     break;
                 default:
+                    cout << "invalid input";
                     break;
             }
-    }
-    return 0;
+        }
     }
     return 0;
 }
