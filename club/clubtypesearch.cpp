@@ -444,7 +444,8 @@ while(flag){
                     }
                 break;
             case 4:
-                cout << "Enter type of club that you what to be displayed : ";
+                cout << "Enter type of club that you what to be displayed from the existing types : "<<endl;
+                cout<<" Arts\n Media\n Recreational\n Literature\n Technical\n";
                 cin >> given_type;
                 cout<<endl;
                 if(!output_file) display_using_clubtype(given_type);
