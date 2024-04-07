@@ -1,0 +1,3 @@
+Musical night,music night is organised in oat,3000,10,5,2024
+Debate session,Debate on the provided topics will take place in cep,1000,12,4,2024
+Interview,Interview of all the faculty members,50,1,6,2024
