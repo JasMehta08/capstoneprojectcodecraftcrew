@@ -81,6 +81,260 @@ public:
     }
 };
 
+class club_access
+{
+private:
+    unordered_map<string, int> club_budgets;
+    unordered_map<string, string> club_password;
+    int n;
+    vector<string> club_names;
+public:
+club_access(){
+    n=0;
+}
+    // Constructor to set custom password for a specific club
+    void add_access_to_club(string club_name, string pass, int budget){
+        club_password[club_name] = pass;
+        club_budgets[club_name] = budget;
+        club_names.push_back(club_name);
+        n++;
+    }   
+    // Function to read password and budget information from file
+    void read_from_file() {
+        ifstream file("password.txt");
+        if (file.is_open()) {
+            string line;
+            while (getline(file, line)) {
+                stringstream ss(line);
+                string club;
+                string pass;
+                int budget;
+                ss >> club >> pass >> budget;
+                add_access_to_club(club, pass, budget);
+            }
+            file.close();
+        } else {
+            cerr << "Error: Unable to open file "<< endl;
+        }
+    }
+    // Function to write updated budget information to file
+    void write_to_file() {
+        ofstream file("password.txt");
+        if (file.is_open()) {
+            for (int i=0; i<n; i++) {
+                file << club_names[i] << " " << club_password[club_names[i]] << " " << club_budgets[club_names[i]] << endl;
+            }
+            file.close();
+            cout << "Budgets updated to file: "<< endl;
+        } else {
+            cerr << "Error: Unable to open file "  << endl;
+        }
+    }
+
+    // funcition to verify wether the password is correct or not.
+    bool verify(string club_name, string passcode)
+    {
+
+        if (club_password[club_name] == passcode)
+        {
+            return true;
+        }
+        else
+        {
+            cout << "Incorrect password, please try again.\n";
+            return false;
+        }
+    }
+    
+    // Function to change password
+    void change_password(string password, string club_name, string new_password) {
+        if (verify(club_name, password)) {
+            club_password[club_name] = new_password;
+            cout << "Password successfully updated.\n";
+            
+        } 
+        else {
+            cout << "Initial password invalid.\n";
+        }
+    }
+    // Function to get the current budget of a club
+    int getCurrentBudget(const string& club_name) {
+        if (club_budgets.find(club_name) != club_budgets.end()) {
+            return club_budgets[club_name];
+        } else {
+            cout << "Club " << club_name << " does not exist." << endl;
+            return -1;
+        }
+    }    
+
+   // Function to deposit money into a club's budget
+    void depositMoney(int money_to_add, const string& club_name) {
+        club_budgets[club_name] += money_to_add;
+        cout << "Deposited " << money_to_add << " into the budget of club " << club_name << endl;
+        
+    }
+
+
+    // Function to withdraw money from a club's budget
+    bool withdrawMoney(int money_to_withdraw, const string& club_name) {
+        if (club_budgets.find(club_name) != club_budgets.end()) {
+            if (club_budgets[club_name] >= money_to_withdraw) {
+                club_budgets[club_name] -= money_to_withdraw;
+                cout << "Withdrawn " << money_to_withdraw << " from the budget of club " << club_name << endl;
+                
+                return true;
+            } else {
+                cout << "Not enough balance in the budget of club " << club_name << endl;
+                return false;
+            }
+        } else {
+            cout << "Club " << club_name << " does not exist." << endl;
+            return false;
+        }
+    }
+};
+
+club_access access;
+
+void get_from_file()
+    {
+        ifstream file("password.txt");
+        if (file.is_open())
+        {
+            string line;
+            while (getline(file, line))
+            {
+                stringstream ss(line);
+                string club;
+                string pass;
+                string budget;
+                getline(ss, club, ' ');
+                getline(ss, pass, ' ');
+                getline(ss,budget, ' ');
+                access.add_access_to_club(club ,pass, stoi(budget));
+            }
+            file.close();
+        }
+        else
+        {
+            cerr << "Error: Unable to open file " << endl;
+        }
+    }
+
+
+class event_details{
+    public:
+    string event_name,event_description,date,club_name;
+    int cost;
+    bool operator<(const event_details& other) const {
+    return date < other.date;
+    }
+};
+
+class calendar{
+    public:
+    priority_queue<pair<int,event_details> > Calender_pq;
+
+    void add_event_to_pq(int d,int m,int y,event_details object){
+        int priority = ((y*365)+(m*31)+(d))*(-1);
+        Calender_pq.push(make_pair(priority, object));
+    }
+    void get_from_file(const string &filename)
+    {
+        ifstream file(filename);
+        if (file.is_open())
+        {
+            string line;
+            while (getline(file, line))
+            {
+                stringstream ss(line);
+                string name;
+                string description,cost_str,day_str,month_str,year_str;
+                string club_name;
+                event_details obj;
+                int cost,day,month,year;
+                if (getline(ss, name, ',') && getline(ss, description, ',') && getline(ss, cost_str, ',') && getline(ss, day_str, ',') && getline(ss, month_str, ',') && getline(ss, year_str, ',')&&getline(ss,club_name, ','))
+                {
+                    cost = stoi(cost_str);
+                    day = stoi(day_str);
+                    month = stoi(month_str);
+                    year = stoi(year_str);
+                    obj.event_name=name;
+                    obj.event_description=description;
+                    obj.cost=cost;
+                    obj.club_name=club_name;
+                    stringstream ss;
+                    ss<< day << "\\" << month << "\\" << year;
+                    ss>>obj.date;
+                    int priority = ((year * 365) + (month * 31) + (day)) * (-1);
+                    Calender_pq.push(make_pair(priority, obj));
+                }
+            }
+            file.close();
+        }
+        else
+        {
+            cerr << "Error: Unable to open file " << filename << endl;
+        }
+    }
+    void display_all_events(){
+       priority_queue<pair<int, event_details> > temp = Calender_pq;
+        if (temp.empty()) {
+            cout << "Calendar is empty." << endl;
+            return;
+        }
+        while (!temp.empty()) {
+            auto event = temp.top();
+            cout << "Event Name: " << event.second.event_name << "\nEvent Description: " << event.second.event_description << "\nEvent cost: " << event.second.cost << "\nEvent date: " << event.second.date << event.second.club_name << endl<<endl;
+            temp.pop();
+        }
+    }
+    void display_most_recent_event(){
+        if (!Calender_pq.empty()) {
+            auto event = Calender_pq.top();
+            cout <<"Most recent event:\n"<< "Event Name: " << event.second.event_name << "\nEvent Description: " << event.second.event_description << "\nEvent cost: " << event.second.cost << "\nEvent date: " << event.second.date <<"\nEvent host: "<< event.second.club_name<< endl;
+        }
+        else {
+            cout << "Calendar is empty." << endl;
+        }
+    }
+    void enter_event(){
+        event_details object;
+        int year,month,day;
+        stringstream ss;
+        cout<<"You are entering a new event: "<<endl;
+        cout<<"Enter event name: ";
+        cin.ignore();
+        getline(cin,object.event_name);
+        cout<<"Enter event description: ";
+        getline(cin,object.event_description);
+        cout<<"Enter cost of this event: ";
+        cin>>object.cost;
+        cout<<"Enter event date in the form (dd mm yyyy): ";
+        cin>>day>>month>>year;
+        cout<<"Enter club who is hosting the event: ";
+        cin >> object.club_name;
+        add_event_to_pq(day,month,year,object);
+        ss<< day << "\\" << month << "\\" << year;
+        ss>>object.date;
+        add_to_file("event_list.txt",object.event_name,object.event_description,object.cost,day,month,year,object.club_name);
+        cout<<"New event entered successfully."<<endl;
+    }
+    void add_to_file(const string &filename, const string &name, const string &description,int cost, int day,int month,int year,const string& club_name)
+    {
+        ofstream file(filename, ios_base::app);
+        if (file.is_open())
+        {
+            file <<name << "," << description << "," << cost << "," << day << "," << month << "," << year<<","<<club_name << endl;
+            file.close();
+        }
+        else
+        {
+            cerr << "Error: Unable to open file " << filename << " for writing." << endl;
+        }
+    }
+};
+
 // details of a particular club will be stored in this class
 class club{
 private:
@@ -283,13 +537,22 @@ public:
 
     void find_mem_by_id(int id)
     {
-        details member = gen_list.at(id);
-        member.print();
+        try{
+            details member = gen_list.at(id);
+            member.print();
+        }catch(const out_of_range& e){
+            cerr << "Input not found, does not exist "<<endl << endl; 
+        }
     }
     void find_mem_by_name(string name)
     {
-        details member = gen2_list.at(name);
-        member.print();
+        
+        try{
+            details member = gen2_list.at(name);
+            member.print();
+        }catch(const out_of_range& e){
+            cerr << "Input not found, does not exist "<<endl << endl; 
+        }
     }
     void add_to_file(const string &filename, int Id, const string &Name, const string &Club_name, const string &Club_type, const string &Faculty)
     {
@@ -350,45 +613,59 @@ club_list list;
 
 int main()
 {
-    
-list.get_from_file("clublist.txt");
-mem_list.get_from_file("gen_list.txt");
-sort_clubs_into_sametype();
-bool flag = true,output_file=false;
-int picker,output_type;
-string filename;
-cout<<"select output type"<<endl
-        <<"1. output in console"<<endl
-        <<"2. output in file"<<endl<<endl;
-        cin>>output_type;
-        if(output_type==2){
-            output_file = true;
-            cout << "give name of the file to output into :";
-            cin>>filename;
-        }
-        
-        ofstream outputFile(filename+".txt"); // Opening a file for output
+    input:
+    int runner=1 ; 
+    cout << "select which of the following you want to perform : "<<endl
+         << "1. search"<<endl
+         << "2. access clubs"<<endl
+         << "3. calender"<<endl;
+    cin >> runner ; 
+    if(runner == 1 || runner == 2 || runner ==3 ){
 
-        if (!outputFile.is_open())
-        { // Checking if the file was opened successfully
-            cerr << "Error opening output file!" << endl;
-        }
-while(flag){
-    cout<<"what do you want to perform:"<<endl
-        <<"1. search for a id"<<endl
-        <<"2. search for a name"<<endl
-        <<"3. search for a club"<<endl
-        <<"4. search for clubs by its type"<<endl
-        <<"enter 0 to exit"<<endl<<endl
-        <<"enter serial number of the function you want to perform : "<<endl<<endl;
-        cin>>picker;
-        if(picker == 0 ){
-            flag = false ;
-            break;
-        }  
-    string given_name;
-    string club_name;
-    string given_type;
+    }
+    else{
+        cout<< "wrong input, try again";
+        goto input;
+    }
+    if (runner == 1){
+        list.get_from_file("clublist.txt");
+        mem_list.get_from_file("gen_list.txt");
+        sort_clubs_into_sametype();
+        bool flag = true,output_file=false;
+        int picker,output_type;
+        string filename;
+        cout<<"select output type"<<endl
+                <<"1. output in console"<<endl
+                <<"2. output in file"<<endl<<endl;
+                cin>>output_type;
+                if(output_type==2){
+                    output_file = true;
+                    cout << "give name of the file to output into :";
+                    cin>>filename;
+                }
+                
+                ofstream outputFile(filename+".txt"); // Opening a file for output
+
+                if (!outputFile.is_open())
+                { // Checking if the file was opened successfully
+                    cerr << "Error opening output file!" << endl;
+                }
+        while(flag){
+            cout<<"what do you want to perform:"<<endl
+                <<"1. search for a id"<<endl
+                <<"2. search for a name"<<endl
+                <<"3. search for a club"<<endl
+                <<"4. search for clubs by its type"<<endl
+                <<"enter 0 to exit"<<endl<<endl
+                <<"enter serial number of the function you want to perform : "<<endl<<endl;
+                cin>>picker;
+                if(picker == 0 ){
+                    flag = false ;
+                    break;
+                }  
+            string given_name;
+            string club_name;
+            string given_type;
         switch(picker){
             case 0:
                 flag = false;
@@ -466,5 +743,96 @@ while(flag){
 }
 
 outputFile.close(); // closing the output file
+    }
+    else if (runner == 2 ){
+        get_from_file();
+    string new_password,initial_password, club_name;
+    
+    int choice;
+    cout<<"Enter the club_name you want access";
+    cin >> club_name;
+    cout<<"Enter the password of the club";
+    cin >> initial_password;
+    if(access.verify(club_name, initial_password )){
+
+        
+    do{    
+        cout<<"Enter 1 to get the current budget\n"
+        <<"Enter 2 to deposite money"
+        <<"Enter 3 to \n"
+        <<"Enter 4 to change password\n"
+        <<"Enter 5 to "<<endl<<endl; 
+        cin>>choice;
+    switch (choice)
+    {
+        case 0:
+        access.write_to_file();
+        cout<<"Successfully exited";
+        break;
+        
+        case 1:
+        cout<<access.getCurrentBudget(club_name);
+
+        break;
+
+        case 2:
+        int x;
+        cout<<"enter money to be added: ";
+        cin>>x;
+        access.depositMoney(x,club_name);
+        cout<<"successfully deposited ";
+        cout<<"Updated blance: ";
+        access.getCurrentBudget(club_name);
+        break;
+
+        case 3:
+        break;
+
+        case 4:
+        cout<<"Enter initial password: "<<endl;
+        cin>>initial_password;
+        cout<<"Enter new password: "<<endl;
+        cin>>new_password;
+        access.change_password(initial_password,club_name,new_password);
+        break;
+
+        case 5:
+        break;
+    }
+    }while(choice);
+    }
+    else{
+        cout<<"incorrect club name or password entered\n";
+    }
+
+    return 0;
+    }
+    else if(runner == 3){
+        int choice;
+    calendar calendar_application;
+    calendar_application.get_from_file("event_list.txt");
+    while(choice){
+            cout<<"Which task do you want to perform?"<<endl;
+            cout<<"1. Enter a new event\n"<<"2. Display most recent event\n"<<"3. Display all the events of the club\n";
+            cin>>choice;
+    
+            switch (choice)
+            {
+                case 0: break;
+                case 1:
+                    calendar_application.enter_event();
+                    break;
+                case 2:
+                    calendar_application.display_most_recent_event();
+                    break;
+                case 3:
+                    calendar_application.display_all_events();
+                    break;
+                default:
+                    break;
+            }
+    }
+    return 0;
+    }
     return 0;
 }
