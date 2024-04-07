@@ -410,7 +410,7 @@ while(flag){
                 }
                 break;
             case 2:
-                cout<<"input particular name that you would like to search for(initial letter of name and surname capital with seperation using underscore) : ";
+                cout<<"input particular name that you would like to search for((Name_Surname)initial letter of name and surname capital with seperation using underscore) : ";
                 cin>>given_name;
                 cout<<endl;
                 if(!output_file) mem_list.find_mem_by_name(given_name);
@@ -426,22 +426,25 @@ while(flag){
                 }
                 break;
             case 3:
-                cout<<"input particular club name that you would like to search for : ";
-                cin>>club_name;
-                cout<<endl;
-                if(!output_file) display_club(club_name);
-                else{
-                    streambuf *coutbuf = cout.rdbuf();
-                    cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
-
-                    // Our main code
-                    display_club(club_name);
-                    // end of the main code
-                    cout.rdbuf(coutbuf);
+                cout << "Enter the club name you would like to search for from these existing clubs: " << endl;
+                for (auto it = existing_clubs.begin(); it != existing_clubs.end(); ++it) {
+                    cout << " " << it->name_return() << endl;
                 }
+                cin>>club_name;
+                    cout<<endl;
+                    if(!output_file) display_club(club_name);
+                    else{
+                        streambuf *coutbuf = cout.rdbuf();
+                        cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
+
+                        // Our main code
+                        display_club(club_name);
+                        // end of the main code
+                        cout.rdbuf(coutbuf);
+                    }
                 break;
             case 4:
-                cout << "enter type of club that you what to be displayed : ";
+                cout << "Enter type of club that you what to be displayed : ";
                 cin >> given_type;
                 cout<<endl;
                 if(!output_file) display_using_clubtype(given_type);
