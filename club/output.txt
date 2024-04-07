@@ -6,14 +6,67 @@ Faculty(True / False): False
 
 Student ID: 202301039
 Student Name: Parshv_Joshi
-Member of Club: Khelaiya_club
-Club type: Arts
+Member of Club: Press_club
+Club type: Media
 Faculty(True / False): False
 
-the list of the members of the club : Khelaiya club
+the list of the members of the club : Khelaiya_club
+
+ Student ID        Faculty        Student Name 
+
+ 202301090         False          Jhil_Patel 
+ 202303018         False          Utsav_Tala 
+ 202301219         False          Meet_Gandhi 
+ 202301130         False          Namra_Sanandiya 
+ 202301266         False          Vansh_Vora 
+ 202301095         False          Dhruv_Patel 
+ 202301104         False          Harshil_Vora 
+ 202301043         False          Nisarg_Divecha 
+ 202301158         False          Manav_Patel 
+ 202301239         False          Kashyap_Ajudiya 
+ 202301440         False          Vraj_Parikh 
+ 202301211         False          Harita_Rathod 
+ 202301485         False          Akshada_Modak 
+ 202301231         False          Kresha_Vora 
+ 202301212         False          Ishti_Patel 
+ 202301243         False          Chaitree_Patel 
+ 202301021         False          Pal_kaneria 
+ 202301414         False          Visha_Sitapara 
+ 202301030         False          Kasak_Sutaria 
+ 202301090         False          Jhil_Patel 
+ 202303018         False          Utsav_Tala 
+ 202301219         False          Meet_Gandhi 
+ 202301130         False          Namra_Sanandiya 
+ 202301266         False          Vansh_Vora 
+ 202301095         False          Dhruv_Patel 
+ 202301104         False          Harshil_Vora 
+ 202301043         False          Nisarg_Divecha 
+ 202301158         False          Manav_Patel 
+ 202301239         False          Kashyap_Ajudiya 
+ 202301440         False          Vraj_Parikh 
+ 202301211         False          Harita_Rathod 
+ 202301485         False          Akshada_Modak 
+ 202301231         False          Kresha_Vora 
+ 202301212         False          Ishti_Patel 
+ 202301243         False          Chaitree_Patel 
+ 202301021         False          Pal_kaneria 
+ 202301414         False          Visha_Sitapara 
+ 202301030         False          Kasak_Sutaria 
+the list of the members of the club : Press_club
 
  Student ID        Faculty        Student Name 
 
  202301039         False          Parshv_Joshi 
  202301072         False          Siddharth_Rambhia 
- 202301414         False          Visha_Sitapara 
+ 202301117         False          Sanya_Vaishnavi 
+ 202301196         False          Guru_Vyas 
+ 202301247         False          Sharnam_Shah 
+ 202304010         False          Dharmya_Aagja 
+ 202301432         False          Jas_Mehta 
+ 202301039         False          Parshv_Joshi 
+ 202301072         False          Siddharth_Rambhia 
+ 202301117         False          Sanya_Vaishnavi 
+ 202301196         False          Guru_Vyas 
+ 202301247         False          Sharnam_Shah 
+ 202304010         False          Dharmya_Aagja 
+ 202301432         False          Jas_Mehta 

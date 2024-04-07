@@ -252,32 +252,132 @@ class club_list{
     }
 };
 
+general_list mem_list;
+club_list list;
+
+void output_into_file(int given , string name, string clubname, string file_name ){
+
+}
+
+
 int main()
 {
-    ofstream outputFile("output.txt"); // Opening a file for output
-
-    if (!outputFile.is_open())
-    { // Checking if the file was opened successfully
-        cerr << "Error opening output file!" << endl;
-        return 1;
-    }
-
-    streambuf *coutbuf = cout.rdbuf();
-    cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
-
-    // Our main code
-    general_list main;
-    club_list list;
+    
     list.get_from_file("clublist.txt");
-    main.get_from_file("gen_list.txt");
-    main.find_mem_by_id(202301414);
-    main.find_mem_by_name("Parshv_Joshi");
-    display_club("Khelaiya_club");
-    display_club("Press_club");
-    main.add_to_file("gen_list.txt",202301000,"Add_func_check","Khelaiya_club","Arts","True");
-    // end of the main code
+    mem_list.get_from_file("gen_list.txt");
+    bool flag = true,output_file=false;
+    int picker,output_type;
+    string filename;
+    cout<<"select output type"<<endl
+            <<"1. output in console"<<endl
+            <<"2. output in file"<<endl<<endl;
+            cin>>output_type;
+            if(output_type==2){
+                output_file = true;
+                cout << "give name of the file to output into :";
+                        cin>>filename;
+            }
+    while(flag){
+        cout<<"what do you want to perform:"<<endl
+            <<"1. search for a id"<<endl
+            <<"2. search for a name"<<endl
+            <<"3. search for a club"<<endl
+            <<"4. search for clubs by its type"<<endl
+            <<"enter 0 to exit"<<endl<<endl
+            <<"enter serial number of the function you want to perform : "<<endl<<endl;
+            cin>>picker;
+            if(picker == 0 ){
+                flag = false ;
+                break;
+            }  
+        string given_name;
+        string club_name;
+            switch(picker){
+                case 0:
+                    flag = false;
+                    break;
+                case 1:
+                    int id;
+                    cout<<"input particular id that you would like to search for : ";
+                    cin>>id;
+                    cout<<endl;
+                    if(!output_file) mem_list.find_mem_by_id(id);
+                    else{
+                        ofstream outputFile(filename); // Opening a file for output
 
-    cout.rdbuf(coutbuf);
-    outputFile.close(); // closing the output file
+                        if (!outputFile.is_open())
+                        { // Checking if the file was opened successfully
+                            cerr << "Error opening output file!" << endl;
+                            break;
+                        }
+
+                        streambuf *coutbuf = cout.rdbuf();
+                        cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
+
+                        // Our main code
+                        mem_list.find_mem_by_id(id);
+                        // end of the main code
+
+                        cout.rdbuf(coutbuf);
+                        outputFile.close(); // closing the output file
+                    }
+                    break;
+                case 2:
+                    cout<<"input particular name that you would like to search for(initial letter of name and surname capital with seperation using underscore) : ";
+                    cin>>given_name;
+                    if(!output_file) mem_list.find_mem_by_name(given_name);
+                    else{
+                        ofstream outputFile(filename); // Opening a file for output
+
+                        if (!outputFile.is_open())
+                        { // Checking if the file was opened successfully
+                            cerr << "Error opening output file!" << endl;
+                            break;
+                        }
+
+                        streambuf *coutbuf = cout.rdbuf();
+                        cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
+
+                        // Our main code
+                        mem_list.find_mem_by_name(given_name);
+                        // end of the main code
+
+                        cout.rdbuf(coutbuf);
+                        outputFile.close(); // closing the output file
+                    }
+                    break;
+                case 3:
+                    cout<<"input particular club name that you would like to search for : ";
+                    cin>>club_name;
+                    if(!output_file) display_club(club_name);
+                    else{
+                        ofstream outputFile(filename); // Opening a file for output
+
+                        if (!outputFile.is_open())
+                        { // Checking if the file was opened successfully
+                            cerr << "Error opening output file!" << endl;
+                            break;
+                        }
+
+                        streambuf *coutbuf = cout.rdbuf();
+                        cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
+
+                        // Our main code
+                        display_club(club_name);
+                        // end of the main code
+
+                        cout.rdbuf(coutbuf);
+                        outputFile.close(); // closing the output file
+                    }
+                    break;
+                case 4:
+                    break;
+                default:
+                    cout <<endl <<endl << "invalid selection, try again";
+                    break;
+            }
+    }
+    
+    
     return 0;
 }
