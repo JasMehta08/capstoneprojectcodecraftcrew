@@ -9,6 +9,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <memory>
 
 using namespace std;
 
@@ -77,21 +78,22 @@ public:
 };
 
 // details of a particular club will be stored in this class
-class club
-{
+class club{
 private:
-    int n;
+    string club_name;
     vector<details> list_of_members;
 
 public:
-    club()
-    {
-        n = 0;
-    }
+    
     void add_member_to_club(details member)
     {
         list_of_members.push_back(member);
-        n++;
+    }
+    void name(string name){
+         club_name = name;
+    }
+    string name_return(){
+        return club_name;
     }
     void printing_club(string club)
     {
@@ -111,127 +113,34 @@ public:
     }
 };
 
-// details of same type of clubs are stored here
-class clubtype
-{
-private:
-    vector<club> list_of_clubs;
-    int m;
 
-public:
-    clubtype()
-    {
-        m = 0;
-    }
-    void add_club(club add)
-    {
-        list_of_clubs.push_back(add);
-        m++;
-    }
-};
 
-club Khelaiya_club, Press_club, Debate_club, Music_club, Dance_club, Cubing_club, Quiz_club, Drama_club, Muse_club, Radio_club, Programming_club, Developers_club;
+vector < club > existing_clubs;
+unordered_map<string , club> clubs;
 
+void add_to_club_list(string club_name){
+    club temp ;
+    temp.name(club_name);
+    existing_clubs.push_back(temp);
+    clubs[club_name]=temp;
+
+}
 void sort_into_club(details member, string club)
 {
-    if (club == "Khelaiya_club")
-    {
-        Khelaiya_club.add_member_to_club(member);
-    }
-    else if (club == "Press_club")
-    {
-        Press_club.add_member_to_club(member);
-    }
-    else if (club == "Music_club")
-    {
-        Music_club.add_member_to_club(member);
-    }
-    else if (club == "Debate_club")
-    {
-        Debate_club.add_member_to_club(member);
-    }
-    else if (club == "Dance_club")
-    {
-        Dance_club.add_member_to_club(member);
-    }
-    else if (club == "Cubing_club")
-    {
-        Cubing_club.add_member_to_club(member);
-    }
-    else if (club == "Quiz_club")
-    {
-        Quiz_club.add_member_to_club(member);
-    }
-    else if (club == "Drama_club")
-    {
-        Drama_club.add_member_to_club(member);
-    }
-    else if (club == "Muse_club")
-    {
-        Muse_club.add_member_to_club(member);
-    }
-    else if (club == "Radio_club")
-    {
-        Radio_club.add_member_to_club(member);
-    }
-    else if (club == "Programming_club")
-    {
-        Programming_club.add_member_to_club(member);
-    }
-    else if (club == "Developers_club")
-    {
-        Developers_club.add_member_to_club(member);
+    for(int i = 0 ; i< existing_clubs.size();i++){
+        if(existing_clubs[i].name_return() == club){
+            existing_clubs[i].add_member_to_club(member);
+            return;
+        }
     }
 }
 void display_club(string club)
 {
-    if (club == "Khelaiya club")
-    {
-        Khelaiya_club.printing_club(club);
-    }
-    else if (club == "Press club")
-    {
-        Press_club.printing_club(club);
-    }
-    else if (club == "Music club")
-    {
-        Music_club.printing_club(club);
-    }
-    else if (club == "Debate club")
-    {
-        Debate_club.printing_club(club);
-    }
-    else if (club == "Dance club")
-    {
-        Dance_club.printing_club(club);
-    }
-    else if (club == "Cubing club")
-    {
-        Cubing_club.printing_club(club);
-    }
-    else if (club == "Quiz club")
-    {
-        Quiz_club.printing_club(club);
-    }
-    else if (club == "Drama club")
-    {
-        Drama_club.printing_club(club);
-    }
-    else if (club == "Muse club")
-    {
-        Muse_club.printing_club(club);
-    }
-    else if (club == "Radio club")
-    {
-        Radio_club.printing_club(club);
-    }
-    else if (club == "Programming club")
-    {
-        Programming_club.printing_club(club);
-    }
-    else if (club == "Developers club")
-    {
-        Developers_club.printing_club(club);
+    for(int i = 0 ; i< existing_clubs.size();i++){
+        if(existing_clubs[i].name_return() == club){
+            existing_clubs[i].printing_club(club);
+            return;
+        }
     }
 }
 
@@ -304,7 +213,7 @@ public:
         if (file.is_open())
         {
             file << "\n"
-                 << Id << " " << Name << " "<< Club_name << " "<< Club_type<< " "<<Faculty << endl;
+                 << Id <<" "<< Name <<" "<< Club_name <<" "<< Club_type<<" "<<Faculty;
             file.close();
             
             add_new(Id, member);
@@ -312,6 +221,33 @@ public:
         else
         {
             cerr << "Error: Unable to open file " << filename << " for writing." << endl;
+        }
+    }
+};
+
+class club_list{
+    private: 
+
+    public:
+    void get_from_file(const string &filename)
+    {
+        ifstream file(filename);
+        if (file.is_open())
+        {
+            string line;
+            while (getline(file, line))
+            {
+                stringstream ss(line);
+                string club;
+                getline(ss, club, ' ');
+
+                add_to_club_list(club);
+            }
+            file.close();
+        }
+        else
+        {
+            cerr << "Error: Unable to open file " << filename << endl;
         }
     }
 };
@@ -331,10 +267,13 @@ int main()
 
     // Our main code
     general_list main;
+    club_list list;
+    list.get_from_file("clublist.txt");
     main.get_from_file("gen_list.txt");
     main.find_mem_by_id(202301414);
     main.find_mem_by_name("Parshv_Joshi");
-    display_club("Khelaiya club");
+    display_club("Khelaiya_club");
+    display_club("Press_club");
     main.add_to_file("gen_list.txt",202301000,"Add_func_check","Khelaiya_club","Arts","True");
     // end of the main code
 
