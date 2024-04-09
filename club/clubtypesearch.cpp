@@ -17,11 +17,11 @@ using namespace std;
 class details
 {
 private:
-    int st_id;
-    string st_name;
-    string club;
-    string club_type;
-    string faculty;
+    int st_id;              //the id of the member
+    string st_name;         //name of the member
+    string club;            //name of the club that member is a part of
+    string club_type;       //type of the club that member is a part of
+    string faculty;         //to display if the member is a faculty or not
 
 public:
     // function to insert a new member
@@ -43,7 +43,7 @@ public:
              << "faculty(true / false)";
         cin >> faculty;
     }
-    // create a new member
+    // create a new member (used mainly for reading from file)
     void create(int id, string name, string club, string clubtype, string fac)
     {
         st_id = id;
@@ -52,6 +52,7 @@ public:
         this->club_type = clubtype;
         faculty = fac;
     }
+    //displaying a particular member in the console
     void print()
     {
         cout << "Student ID: " << st_id;
@@ -69,7 +70,7 @@ public:
         cout << faculty << "\n"
              << endl;
     }
-
+    //function is used with another function to create a table that is displaying the whole club
     void print_club()
     {
         cout << ' ' << st_id << ' '
@@ -80,19 +81,21 @@ public:
              << endl;
     }
 };
-
+//the class is used to gain access to a few important things related to a particular club 
+//requires password to access a particular club and the password of a particular club can be changed to become unique to a club
 class club_access
 {
 private:
-    unordered_map<string, int> club_budgets;
-    unordered_map<string, string> club_password;
-    int n;
-    vector<string> club_names;
+    unordered_map<string, int> club_budgets;            //a hashmap relating club names to their budgets
+    unordered_map<string, string> club_password;        //a hashmap relating club names to their passwords
+    int n;                                              //a count of the number of clubs that are present
+    vector<string> club_names;                          //a vector(dynamic array) which is storing the names of all the clubs
 public:
+//Constructor initializing count of the number of clubs
 club_access(){
     n=0;
 }
-    // Constructor to set custom password for a specific club
+    // Function to set custom password for a specific club
     void add_access_to_club(string club_name, string pass, int budget){
         club_password[club_name] = pass;
         club_budgets[club_name] = budget;
@@ -101,7 +104,7 @@ club_access(){
     }   
     // Function to read password and budget information from file
     void read_from_file() {
-        ifstream file("password.txt");
+        ifstream file("password.txt");      //fixed file which is storing all the club names , passwords and club budgets 
         if (file.is_open()) {
             string line;
             while (getline(file, line)) {
@@ -117,15 +120,14 @@ club_access(){
             cerr << "Error: Unable to open file "<< endl;
         }
     }
-    // Function to write updated budget information to file
-    void write_to_file() {
+    // Function to write updated budget information to the fixed file at the end of the code as to store it for future use
+    void write_to_file_at_exit() {
         ofstream file("password.txt");
         if (file.is_open()) {
             for (int i=0; i<n; i++) {
                 file << club_names[i] << " " << club_password[club_names[i]] << " " << club_budgets[club_names[i]] << endl;
             }
             file.close();
-            cout << "Budgets updated to file: "<< endl;
         } else {
             cerr << "Error: Unable to open file "  << endl;
         }
@@ -158,45 +160,48 @@ club_access(){
         }
     }
     // Function to get the current budget of a club
-    int getCurrentBudget(const string& club_name) {
-        if (club_budgets.find(club_name) != club_budgets.end()) {
-            return club_budgets[club_name];
-        } else {
-            cout << "Club " << club_name << " does not exist." << endl;
-            return -1;
+    void getCurrentBudget(const string& club_name) {
+        try {
+            cout<<club_budgets[club_name]<<endl<<endl;
+        } catch (const out_of_range& e){
+            cerr<<"Error : club not found "<<endl<<endl;
         }
     }    
 
    // Function to deposit money into a club's budget
     void depositMoney(int money_to_add, const string& club_name) {
         club_budgets[club_name] += money_to_add;
-        cout << "Deposited " << money_to_add << " into the budget of club " << club_name << endl;
+        cout << "Deposited " << money_to_add 
+             << " into the budget of club " << club_name << endl;
         
     }
 
 
     // Function to withdraw money from a club's budget
-    bool withdrawMoney(int money_to_withdraw, const string& club_name) {
-        if (club_budgets.find(club_name) != club_budgets.end()) {
+    void withdrawMoney(int money_to_withdraw, const string& club_name) {
+        try {
             if (club_budgets[club_name] >= money_to_withdraw) {
+
                 club_budgets[club_name] -= money_to_withdraw;
                 cout << "Withdrawn " << money_to_withdraw << " from the budget of club " << club_name << endl;
-                
-                return true;
+
             } else {
+
                 cout << "Not enough balance in the budget of club " << club_name << endl;
-                return false;
+
             }
-        } else {
-            cout << "Club " << club_name << " does not exist." << endl;
-            return false;
+        } catch(const out_of_range& e) {
+
+            cerr << "Club " << club_name << " does not exist." << endl;
+
         }
     }
 };
-
+// a global object that has club access
 club_access access;
 
-void get_from_file()
+// function to load the club details into the club access object
+void get_from_file_access()
     {
         ifstream file("password.txt");
         if (file.is_open())
@@ -221,7 +226,7 @@ void get_from_file()
         }
     }
 
-
+// class that is used in the calender to store a event
 class event_details{
     public:
     string event_name,event_description,date,club_name;
@@ -231,17 +236,22 @@ class event_details{
     }
 };
 
+// class is used to create a calender that stores all the events in a proper date-wise order
 class calendar{
     public:
+    // we are using a priority queue for making the calender and using pairs
+    //where the first part of the pair is used to set priority of the events using a expression
     priority_queue<pair<int,event_details> > Calender_pq;
 
     void add_event_to_pq(int d,int m,int y,event_details object){
+        //the particular data is broken into 3 parts and then a formula is used so as it make it useful in setting priority
         int priority = ((y*365)+(m*31)+(d))*(-1);
         Calender_pq.push(make_pair(priority, object));
     }
-    void get_from_file(const string &filename)
+    //function to get preset information from a file
+    void get_from_file_calander()
     {
-        ifstream file(filename);
+        ifstream file("event_list.txt");
         if (file.is_open())
         {
             string line;
@@ -274,9 +284,10 @@ class calendar{
         }
         else
         {
-            cerr << "Error: Unable to open file " << filename << endl;
+            cerr << "Error: Unable to open file " << endl;
         }
     }
+    //function to display all the events
     void display_all_events(){
        priority_queue<pair<int, event_details> > temp = Calender_pq;
         if (temp.empty()) {
@@ -285,19 +296,30 @@ class calendar{
         }
         while (!temp.empty()) {
             auto event = temp.top();
-            cout << "Event Name: " << event.second.event_name << "\nEvent Description: " << event.second.event_description << "\nEvent cost: " << event.second.cost << "\nEvent date: " << event.second.date << event.second.club_name << endl<<endl;
+            cout << "Event Name: " << event.second.event_name 
+                 << "\nEvent Description: " << event.second.event_description 
+                 << "\nEvent cost: " << event.second.cost 
+                 << "\nEvent date: " << event.second.date 
+                 << "\nEvent host: "<< event.second.club_name << endl<<endl;
             temp.pop();
         }
     }
+    // function to display the closest event
     void display_most_recent_event(){
         if (!Calender_pq.empty()) {
             auto event = Calender_pq.top();
-            cout <<"Most recent event:\n"<< "Event Name: " << event.second.event_name << "\nEvent Description: " << event.second.event_description << "\nEvent cost: " << event.second.cost << "\nEvent date: " << event.second.date <<"\nEvent host: "<< event.second.club_name<< endl;
+            cout <<"Most recent event:\n"
+                 << "Event Name: " << event.second.event_name 
+                 << "\nEvent Description: " << event.second.event_description 
+                 << "\nEvent cost: " << event.second.cost 
+                 << "\nEvent date: " << event.second.date 
+                 <<"\nEvent host: "<< event.second.club_name<< endl<<endl;
         }
         else {
             cout << "Calendar is empty." << endl;
         }
     }
+    //function to add new event
     void enter_event(){
         event_details object;
         int year,month,day;
@@ -320,6 +342,7 @@ class calendar{
         add_to_file("event_list.txt",object.event_name,object.event_description,object.cost,day,month,year,object.club_name);
         cout<<"New event entered successfully."<<endl;
     }
+    //function to add the created function into a file
     void add_to_file(const string &filename, const string &name, const string &description,int cost, int day,int month,int year,const string& club_name)
     {
         ofstream file(filename, ios_base::app);
@@ -344,27 +367,32 @@ private:
     vector<details> list_of_members;
 
 public:
-    
+    //function to add the member to a club
     void add_member_to_club(details member)
     {
         list_of_members.push_back(member);
     }
+    //function to access the name of the club
     void name_(string name){
 
          club_name = name;
 
     }
+    //function to access the type the club
     void type_(string type){
         this->type = type; 
     }
+    //function to get the name of the club
     string name_return(){
 
         return club_name;
 
     }
+    //function to get the club type
     string type_return(){
         return type;
     }
+    //function to display the whole club
     void printing_club(string club)
     {
         cout << "the list of the members of the club : " << club << endl
@@ -384,18 +412,24 @@ public:
     }
 };
 
+//a vector(dynamic array) to store all the existing clubs
 vector < club > existing_clubs;
-unordered_map<string , club> clubs;
 
+//a hashmap to relate the name of a club with the club object 
+unordered_map<string , club> clubs_map;
+
+//function to add a club to the list of clubs
 void add_to_club_list(string club_name , string type){
 
     club temp ;
     temp.name_(club_name);
     temp.type_(type);
     existing_clubs.push_back(temp);
-    clubs[club_name]=temp;
+    clubs_map[club_name]=temp;
 
 }
+
+//function to sort a member into a club
 void sort_into_club(details member, string club)
 {
     for(int i = 0 ; i< existing_clubs.size();i++){
@@ -407,6 +441,8 @@ void sort_into_club(details member, string club)
         }
     }
 }
+
+//function to display the whole club
 void display_club(string club)
 {
     for(int i = 0 ; i< existing_clubs.size();i++){
@@ -419,6 +455,7 @@ void display_club(string club)
     }
 }
 
+//class that is used to display clubs of the same type
 class club_type{
     private:
     vector<string> clubs_sametype;
@@ -433,8 +470,11 @@ class club_type{
     }
 };
 
+// defination of all the different club types
 club_type Arts,Media,Recreational,Literature,Technical;
 
+
+//sorting clubs into the type of clubs that are present
 void sort_clubs_into_sametype(){
     for(int i = 0 ; i<existing_clubs.size(); i++){
         if(existing_clubs[i].type_return() == "Arts"){
@@ -458,6 +498,7 @@ void sort_clubs_into_sametype(){
     }
 }
 
+//function to display all the same clubs of the same type
 void display_using_clubtype(string type){
     {
         cout << "displaying clubs of the type : "
@@ -490,16 +531,17 @@ class general_list
 public:
     unordered_map<int, details> gen_list;
     unordered_map<string, details> gen2_list;
-
+    //function for adding new member to the general list (by id)
     void add_new(int id, details member)
     {
         gen_list[id] = member;
     }
+    //function for adding new member to the general list (by name)
     void add_2new(string name, details member)
     {
         gen2_list[name] = member;
     }
-
+    // function to get information stored in file
     void get_from_file(const string &filename)
     {
         ifstream file(filename);
@@ -534,7 +576,7 @@ public:
             cerr << "Error: Unable to open file " << filename << endl;
         }
     }
-
+    //function finding member using id
     void find_mem_by_id(int id)
     {
         try{
@@ -544,9 +586,9 @@ public:
             cerr << "Input not found, does not exist "<<endl << endl; 
         }
     }
+    //function finding member using name
     void find_mem_by_name(string name)
     {
-        
         try{
             details member = gen2_list.at(name);
             member.print();
@@ -554,6 +596,7 @@ public:
             cerr << "Input not found, does not exist "<<endl << endl; 
         }
     }
+    // function for adding a new member to the file
     void add_to_file(const string &filename, int Id, const string &Name, const string &Club_name, const string &Club_type, const string &Faculty)
     {
         details member;
@@ -580,17 +623,18 @@ public:
     }
 };
 
+//function displaying all the clubs
 void dis_club(){
     for (auto it = existing_clubs.begin(); it != existing_clubs.end(); ++it) {
-                        cout << " " << it->name_return() << endl;
-                }
+        cout << " " << it->name_return() << endl;
+    }
 }
-
+//class containing clubs in a list from the file
 class club_list{
     private: 
 
     public:
-    void get_from_file(const string &filename)
+    void get_from_file_club(const string &filename)
     {
         ifstream file(filename);
         if (file.is_open())
@@ -620,10 +664,10 @@ club_list list;
 
 int main()
 {
-    list.get_from_file("clublist.txt");
+    list.get_from_file_club("clublist.txt");
     mem_list.get_from_file("gen_list.txt");
     sort_clubs_into_sametype();
-    get_from_file();
+    get_from_file_access();
     input:
     int runner=1 ;
     cout << "select which of the following you want to perform : "<<endl
@@ -686,9 +730,9 @@ int main()
                     streambuf *coutbuf = cout.rdbuf();
                     cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
 
-                    // Our main code
+                    
                     mem_list.find_mem_by_id(id);
-                    // end of the main code
+                    
                     cout.rdbuf(coutbuf);
                 }
                 break;
@@ -702,9 +746,9 @@ int main()
                     streambuf *coutbuf = cout.rdbuf();
                     cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
 
-                    // Our main code
+                    
                     mem_list.find_mem_by_name(given_name);
-                    // end of the main code
+                    
                     cout.rdbuf(coutbuf);
                 }
                 break;
@@ -720,9 +764,9 @@ int main()
                         streambuf *coutbuf = cout.rdbuf();
                         cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
 
-                        // Our main code
+                        
                         display_club(club_name);
-                        // end of the main code
+                       
                         cout.rdbuf(coutbuf);
                     }
                 break;
@@ -736,9 +780,9 @@ int main()
                     streambuf *coutbuf = cout.rdbuf();
                     cout.rdbuf(outputFile.rdbuf()); // Redirecting output to file instead of console
 
-                    // Our main code
+                    
                     display_using_clubtype(given_type);
-                    // end of the main code
+                    
                     cout.rdbuf(coutbuf);
                 }
                 break;
@@ -751,95 +795,97 @@ int main()
     outputFile.close(); // closing the output file
     }
     else if (runner == 2 ){
-    string new_password,initial_password, club_name;
-    string name, club_name_,club_type_,faculty;
-    int choice,id;
-    cout<<"Enter the club_name you want access : ";
-    cin >> club_name;
-    cout<<"Enter the password of the club : ";
-    cin >> initial_password;
-    if(access.verify(club_name, initial_password )){
+        string new_password,initial_password, club_name;
+        string name, club_name_,club_type_,faculty;
+        int choice,id;
+        cout<<"Enter the club_name you want access : ";
+        cin >> club_name;
+        cout<<"Enter the password of the club : ";
+        cin >> initial_password;
+        if(access.verify(club_name, initial_password )){
 
-        
-    do{    
-        cout<<endl<<"Enter 1 to get the current budget"<<endl
-        <<"Enter 2 to deposite money"<<endl
-        <<"Enter 3 to add member to general list"<<endl
-        <<"Enter 4 to change password"<<endl
-        <<endl; 
-        cin>>choice;
-    switch (choice)
-    {
-        case 0:
-        access.write_to_file();
-        cout<<"Successfully exited";
-        break;
-        
-        case 1:
-        cout<< "current budget: "<<access.getCurrentBudget(club_name)<<endl<<endl;
+            
+        do{    
+            cout<<endl<<"Enter 1 to get the current budget"<<endl
+            <<"Enter 2 to deposit money"<<endl
+            <<"Enter 3 to add member to general list"<<endl
+            <<"Enter 4 to change password"<<endl
+            <<"0 to exit the code"<<endl
+            <<endl; 
+            cin>>choice;
+        switch (choice)
+        {
+            case 0:
+            access.write_to_file_at_exit();
+            cout<<"Successfully exited";
+            break;
+            
+            case 1:
+            cout<< "current budget: ";
+            access.getCurrentBudget(club_name);
 
-        break;
+            break;
 
-        case 2:
-        int x;
-        cout<<"enter money to be added: ";
-        cin>>x;
-        cout << endl;
-        access.depositMoney(x,club_name);
-        cout<<"successfully deposited "<<endl;
-        cout<<"Updated balance: ";
-        cout << access.getCurrentBudget(club_name);
-        cout << endl;
-        break;
+            case 2:
+            int x;
+            cout<<"enter money to be added: ";
+            cin>>x;
+            cout << endl;
+            access.depositMoney(x,club_name);
+            cout<<"successfully deposited "<<endl;
+            cout<<"Updated balance: ";
+            access.getCurrentBudget(club_name);
+            break;
 
-        case 3:
-                cout << "insert details" << endl
-                    << "id. number :";
-                cin >> id;
-                cout << endl
-                    << "name :";
-                cin >> name;
-                cout << endl
-                    << "club :";
-                dis_club();
-                cin >> club_name_;
-                cout << endl
-                    << "type of club :"
-                    <<endl;
-                    cout<<" Arts\n Media\n Recreational\n Literature\n Technical\n";
-                cin >> club_type_;
-                cout << endl
-                    << "faculty(true / false) :";
-                cin >> faculty;
-                mem_list.add_to_file("gen_list.txt", id, name, club_name_, club_type_, faculty);
-        break;
+            case 3:
+                    cout << "insert details" << endl
+                        << "id. number :";
+                    cin >> id;
+                    cout << endl
+                        << "name :";
+                    cin >> name;
+                    cout << endl
+                        << "club :";
+                    dis_club();
+                    cin >> club_name_;
+                    cout << endl
+                        << "type of club :"
+                        <<endl;
+                        cout<<" Arts\n Media\n Recreational\n Literature\n Technical\n";
+                    cin >> club_type_;
+                    cout << endl
+                        << "faculty(true / false) :";
+                    cin >> faculty;
+                    mem_list.add_to_file("gen_list.txt", id, name, club_name_, club_type_, faculty);
+            break;
 
-        case 4:
-        cout<<"Enter initial password: "<<endl;
-        cin>>initial_password;
-        cout<<"Enter new password: "<<endl;
-        cin>>new_password;
-        access.change_password(initial_password,club_name,new_password);
-        break;
+            case 4:
+            cout<<"Enter initial password: "<<endl;
+            cin>>initial_password;
+            cout<<"Enter new password: "<<endl;
+            cin>>new_password;
+            access.change_password(initial_password,club_name,new_password);
+            break;
 
-        default:
-        cout << "invalid input";
-        break;
-    }
-    }while(choice);
-    }
-    else{
-        cout<<"incorrect club name or password entered\n";
-    }
-    return 0;
+            default:
+            cout << "invalid input";
+            break;
+        }
+        }while(choice);
+        }
+        else{
+            cout<<"incorrect club name or password entered\n";
+        }
     }
     else if(runner == 3){
         calendar calendar_application;
-        calendar_application.get_from_file("event_list.txt");
+        calendar_application.get_from_file_calander();
         int use=1;
         while(use){
             cout<<"Which task do you want to perform?"<<endl;
-            cout<<"1. Enter a new event\n"<<"2. Display most recent event\n"<<"3. Display all the events of the club\n";
+            cout<<"1. Enter a new event\n"
+                <<"2. Display most recent event\n"
+                <<"3. Display all the events of the club\n";
             cin>>use;
             switch (use)
             {
@@ -858,6 +904,15 @@ int main()
                     break;
             }
         }
+    }
+    string end;
+    cout << "do you want to end the performing tasks?(Yes/No) :"<<endl;
+    cin >> end;
+    if(end == "Yes"){
+        return 0;
+    }
+    else if(end == "No"){
+        goto input;
     }
     return 0;
 }

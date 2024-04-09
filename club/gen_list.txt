@@ -73,3 +73,4 @@
 456 dsf cd "/Users/jasmehta/Desktop/capstone/capstoneprojectcodecraftcrew/club/" &&
 453 dfg cd "/Users/jasmehta/Desktop/capstone/capstoneprojectcodecraftcrew/club/" &&
 202301532 Parth_Khan Music_club Arts true
+202101423 Kenil_Kuch Press_club Media false
