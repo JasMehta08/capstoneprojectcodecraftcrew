@@ -2,7 +2,6 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <bits/stdc++.h>
 #include <unordered_map>
 #include <vector>
 
